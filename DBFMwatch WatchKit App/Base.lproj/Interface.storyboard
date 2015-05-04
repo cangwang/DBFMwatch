@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder.WatchKit.Storyboard" version="3.0" toolsVersion="7531" systemVersion="14A389" targetRuntime="watchKit" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="AgC-eL-Hgc">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7520"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBWatchKitPlugin" version="3737"/>
+    </dependencies>
+    <scenes>
+        <!--Interface Controller-->
+        <scene sceneID="aou-V4-d1y">
+            <objects>
+                <controller id="AgC-eL-Hgc" customClass="InterfaceController" customModule="DBFMwatch_WatchKit_App" customModuleProvider="target">
+                    <items>
+                        <group width="100" height="100" alignment="center" radius="10" id="1Wq-35-08b">
+                            <items>
+                                <imageView width="100" height="100" alignment="left" id="2a3-X8-tcG"/>
+                            </items>
+                        </group>
+                        <label width="1" alignment="center" text="歌曲-歌手" textAlignment="center" id="mqE-4b-UkC">
+                            <fontDescription key="font" style="UICTFontTextStyleFootnote"/>
+                        </label>
+                        <group width="1" alignment="left" verticalAlignment="bottom" spacing="10" id="xcC-Ol-glg">
+                            <items>
+                                <button width="20" height="20" alignment="center" verticalAlignment="center" backgroundImage="btnPre" id="jIg-uh-dL5">
+                                    <connections>
+                                        <action selector="onPre" destination="AgC-eL-Hgc" id="j1X-P6-bxV"/>
+                                    </connections>
+                                </button>
+                                <button width="25" height="25" alignment="center" verticalAlignment="center" backgroundImage="btnPause" id="iYc-OL-4DH">
+                                    <connections>
+                                        <action selector="onPlay" destination="AgC-eL-Hgc" id="NpU-qq-SV9"/>
+                                    </connections>
+                                </button>
+                                <button width="20" height="20" alignment="center" verticalAlignment="center" backgroundImage="btnNext" id="l2C-CN-tW4">
+                                    <connections>
+                                        <action selector="onNext" destination="AgC-eL-Hgc" id="cEO-Cc-0HI"/>
+                                    </connections>
+                                </button>
+                            </items>
+                        </group>
+                    </items>
+                    <menu key="menu" id="RMA-Y8-nfn">
+                        <items>
+                            <menuItem title="歌曲" icon="info" id="saD-ul-Xjz">
+                                <connections>
+                                    <action selector="onShowSong" destination="AgC-eL-Hgc" id="hR7-4W-Td4"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="频道" icon="more" id="7dY-PO-bFK">
+                                <connections>
+                                    <action selector="onShowChannel" destination="AgC-eL-Hgc" id="ZYQ-ci-NVn"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="取消" icon="block" id="d6u-tJ-pK3"/>
+                        </items>
+                    </menu>
+                    <connections>
+                        <outlet property="btnNext" destination="l2C-CN-tW4" id="ytX-pX-OVh"/>
+                        <outlet property="btnPlay" destination="iYc-OL-4DH" id="j7k-Ge-XNG"/>
+                        <outlet property="btnPre" destination="jIg-uh-dL5" id="Gdy-3p-fGL"/>
+                        <outlet property="img" destination="2a3-X8-tcG" id="u6C-y0-vHx"/>
+                        <outlet property="lab" destination="mqE-4b-UkC" id="MEX-GN-eIS"/>
+                    </connections>
+                </controller>
+            </objects>
+            <point key="canvasLocation" x="220" y="345"/>
+        </scene>
+        <!--歌曲-->
+        <scene sceneID="ePW-QM-gE3">
+            <objects>
+                <controller identifier="song" title="歌曲" id="jRU-Rs-XOF" customClass="WKSongController" customModule="DBFMwatch_WatchKit_Extension">
+                    <items>
+                        <table alignment="left" id="aO7-NY-ub0">
+                            <items>
+                                <tableRow identifier="songRow" id="6Kc-lQ-Wyy" customClass="WKSongRow" customModule="DBFMwatch_WatchKit_Extension">
+                                    <group key="rootItem" width="1" alignment="left" id="ghf-II-jcg">
+                                        <items>
+                                            <imageView width="36" height="36" alignment="left" verticalAlignment="center" id="kgk-Qj-i6z"/>
+                                            <group width="88" alignment="left" layout="vertical" id="JQc-wz-v38">
+                                                <items>
+                                                    <label alignment="left" text="Label" id="Jce-MQ-h7q"/>
+                                                    <label alignment="left" text="Label" id="lvN-Va-7AT">
+                                                        <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                                        <fontDescription key="font" style="UICTFontTextStyleFootnote"/>
+                                                    </label>
+                                                </items>
+                                            </group>
+                                        </items>
+                                    </group>
+                                    <connections>
+                                        <outlet property="img" destination="kgk-Qj-i6z" id="Pe6-ol-Ed9"/>
+                                        <outlet property="lbArtist" destination="lvN-Va-7AT" id="ta9-Pc-rO9"/>
+                                        <outlet property="lbTitle" destination="Jce-MQ-h7q" id="aQF-Pt-yab"/>
+                                    </connections>
+                                </tableRow>
+                            </items>
+                        </table>
+                    </items>
+                    <connections>
+                        <outlet property="table" destination="aO7-NY-ub0" id="5GV-um-2RC"/>
+                    </connections>
+                </controller>
+            </objects>
+            <point key="canvasLocation" x="468" y="345"/>
+        </scene>
+        <!--频道-->
+        <scene sceneID="cJr-4Y-I3G">
+            <objects>
+                <controller identifier="channel" title="频道" id="Mto-pd-1EO" customClass="WKChannelController" customModule="DBFMwatch_WatchKit_Extension">
+                    <items>
+                        <table alignment="left" id="JPB-7m-fYH">
+                            <items>
+                                <tableRow identifier="channelRow" id="9Rq-ix-xdL" customClass="WKChannelRow" customModule="DBFMwatch_WatchKit_Extension">
+                                    <group key="rootItem" width="1" height="0.0" alignment="left" id="32C-eI-kDm">
+                                        <items>
+                                            <label alignment="left" text="Label" id="ZX5-7S-2bs"/>
+                                        </items>
+                                    </group>
+                                    <connections>
+                                        <outlet property="titleLab" destination="ZX5-7S-2bs" id="Had-XD-NWf"/>
+                                    </connections>
+                                </tableRow>
+                            </items>
+                        </table>
+                    </items>
+                    <connections>
+                        <outlet property="table" destination="JPB-7m-fYH" id="rab-eA-iV9"/>
+                    </connections>
+                </controller>
+            </objects>
+            <point key="canvasLocation" x="-6" y="345"/>
+        </scene>
+        <!--Static Notification Interface Controller-->
+        <scene sceneID="AEw-b0-oYE">
+            <objects>
+                <notificationController id="YCC-NB-fut">
+                    <items>
+                        <label alignment="left" text="Alert Label" id="IdU-wH-bcW"/>
+                    </items>
+                    <notificationCategory key="notificationCategory" identifier="myCategory" id="JfB-70-Muf"/>
+                    <connections>
+                        <outlet property="notificationAlertLabel" destination="IdU-wH-bcW" id="JKC-fr-R95"/>
+                        <segue destination="4sK-HA-Art" kind="relationship" relationship="dynamicNotificationInterface" id="kXh-Jw-8B1"/>
+                    </connections>
+                </notificationController>
+            </objects>
+            <point key="canvasLocation" x="220" y="852"/>
+        </scene>
+        <!--Notification Controller-->
+        <scene sceneID="ZPc-GJ-vnh">
+            <objects>
+                <controller id="4sK-HA-Art" customClass="NotificationController" customModule="DBFMwatch_WatchKit_App" customModuleProvider="target"/>
+            </objects>
+            <point key="canvasLocation" x="468" y="852"/>
+        </scene>
+    </scenes>
+</document>
