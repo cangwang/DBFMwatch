@@ -1,8 +1,25 @@
 import WatchKit
 import Foundation
 import MediaPlayer
+//页面跳转的标志
+var controlflag = 0;
+//歌曲计时器
+var songtime = 0
+//歌曲长度
+var songlength = 0
 
-class InterfaceController: WKInterfaceController ,HttpProtocol,ChannelProtocol,SongProtocol{
+//申明一个计时器
+var timer:NSTimer?
+
+//声明一个媒体播放器的实例
+var audioPlayer:MPMoviePlayerController = MPMoviePlayerController()
+
+//网络控制器的类的实例
+var eHttp:HttpController = HttpController()
+//引用单例类
+var data:LZData = LZData.instance
+
+class InterfaceController: WKInterfaceController ,HttpProtocol{
     @IBOutlet weak var img: WKInterfaceImage!
     
     @IBOutlet weak var lab: WKInterfaceLabel!
@@ -13,19 +30,9 @@ class InterfaceController: WKInterfaceController ,HttpProtocol,ChannelProtocol,S
     
     @IBOutlet weak var btnNext: WKInterfaceButton!
     
-    //网络控制器的类的实例
-    var eHttp:HttpController = HttpController()
-    //引用单例类
-    var data:LZData = LZData.instance
-    
-    //声明一个媒体播放器的实例
-    var audioPlayer:MPMoviePlayerController = MPMoviePlayerController()
     
     //当前播放歌曲的索引值
     var currIndex:Int = 0
-    
-    //判断是否更新主界面的信息
-    //var isReLoad:Bool = false
     
     //界面跳转到频道列表
     @IBAction func onShowChannel() {
@@ -33,9 +40,8 @@ class InterfaceController: WKInterfaceController ,HttpProtocol,ChannelProtocol,S
         //isReLoad = true
     }
     
-    @IBAction func onShowSong() {
-        self.presentControllerWithName("song", context: self)
-        //isReLoad = true
+    @IBAction func onShowInfo() {
+        self.presentControllerWithName("info", context: currIndex)
     }
     
     override func awakeWithContext(context: AnyObject?) {
@@ -44,11 +50,21 @@ class InterfaceController: WKInterfaceController ,HttpProtocol,ChannelProtocol,S
         //http://www.douban.com/j/app/radio/channels
         //频道音乐数据网址
         //http://douban.fm/j/mine/playlist?type=n&channel=0&from=mainsite
-        
         eHttp.delegate = self
-        eHttp.onSearch("http://www.douban.com/j/app/radio/channels")
-        eHttp.onSearch("http://douban.fm/j/mine/playlist?type=n&channel=0&from=mainsite")
-       
+        if controlflag == 1 {
+            let rowIndex = context as! Int
+            onSetSong(rowIndex)
+
+            controlflag = 0
+        }else if controlflag == 2 {
+            controlflag = 0
+            let rowIndex = context as! Int
+            let channelId = data.channels[rowIndex]["channel_id"].stringValue
+            onChangeChannel(channelId)
+        }else{
+            eHttp.onSearch("http://www.douban.com/j/app/radio/channels")
+            eHttp.onSearch("http://douban.fm/j/mine/playlist?type=n&channel=0&from=mainsite")
+        }
     }
     
     func didRecieveResults(results: AnyObject) {
@@ -75,9 +91,7 @@ class InterfaceController: WKInterfaceController ,HttpProtocol,ChannelProtocol,S
     
     //接收歌曲索引
     func onChangeSong(index: Int) {
-        //println("song index:\(index)")
         onSetSong(index)
-        
     }
     
     //根据歌曲索引设置音乐信息
@@ -86,30 +100,51 @@ class InterfaceController: WKInterfaceController ,HttpProtocol,ChannelProtocol,S
         currIndex = index
         
         //获取行数据
-        var rowData:JSON = self.data.songs[index] as JSON
+        var rowData:JSON = data.songs[index] as JSON
         //设置封面
         onSetImage(rowData)
         
         //获取歌曲文件地址
         var songUrl:String = rowData["url"].string!
+        songlength = rowData["length"].int! + 1
+        println("song:\(songlength)")
         //播放歌曲
         onSetAudio(songUrl)
     }
     //播放歌曲的方法
     func onSetAudio(url:String){
+        //先销毁计时器
+        timer?.invalidate()
+        
+        //歌曲播放时间至0
+        songtime = 0
+        
         isPlay = true
         btnPlay.setBackgroundImageNamed("btnPause")
         
-        self.audioPlayer.stop()
-        self.audioPlayer.contentURL = NSURL(string:url)
-        self.audioPlayer.play()
+        audioPlayer.stop()
+        audioPlayer.contentURL = NSURL(string:url)
+        audioPlayer.play()
+        
+        //设定定时器
+        timer = NSTimer.scheduledTimerWithTimeInterval(1, target: self, selector: "TimerToNext", userInfo: nil, repeats: true)
+    }
+    
+    func TimerToNext(){
+        if isPlay {
+           songtime++
+           //println(songtime)
+        }
+        if songtime >= songlength {
+           onNext()
+        }
     }
     
     @IBAction func onPre() {
         //自减
         currIndex--
         if currIndex < 0{
-            currIndex = self.data.songs.count - 1
+            currIndex = data.songs.count - 1
         }
         onSetSong(currIndex)
     }
@@ -117,7 +152,7 @@ class InterfaceController: WKInterfaceController ,HttpProtocol,ChannelProtocol,S
     @IBAction func onNext() {
         //自增
         currIndex++
-        if currIndex > self.data.songs.count - 1 {
+        if currIndex > data.songs.count - 1 {
             currIndex = 0
         }
         onSetSong(currIndex)
@@ -139,26 +174,25 @@ class InterfaceController: WKInterfaceController ,HttpProtocol,ChannelProtocol,S
     //设置歌曲封面以及信息
     func onSetImage(rowData:JSON){
         let imgUrl = rowData["picture"].string
-        data.onSetImage(imgUrl!, img: img)
         
         let sTitle = rowData["title"].string
         let sArtist = rowData["artist"].string
         let title = "\(sTitle!)-\(sArtist!)"
-        lab.setText(title)
+        //主线程更新UI
+        dispatch_async(dispatch_get_main_queue(), { () -> Void in
+            data.onSetImage(imgUrl!, img: self.img)
+            self.lab.setText(title)
+        })
+        
     }
 
     override func willActivate() {
         // This method is called when watch view controller is about to be visible to user
         super.willActivate()
         //通过标志位判断
-//        if isReLoad {
-//            var rowData:JSON = self.data.songs[currIndex] as JSON
-//            onSetImage(rowData)
-//            isReLoad = false
-//        }
         
-        if self.data.songs.count > 0 {
-            var rowData:JSON = self.data.songs[currIndex] as JSON
+        if data.songs.count > 0 {
+            var rowData:JSON = data.songs[currIndex] as JSON
             onSetImage(rowData)
             if isPlay {
                 btnPlay.setBackgroundImageNamed("btnPause")
@@ -171,6 +205,29 @@ class InterfaceController: WKInterfaceController ,HttpProtocol,ChannelProtocol,S
     override func didDeactivate() {
         // This method is called when watch view controller is no longer visible
         super.didDeactivate()
+    }
+    //响应本地通知按钮
+    override func handleActionWithIdentifier(identifier: String?, forLocalNotification localNotification: UILocalNotification) {
+        if let userInfo = localNotification.userInfo {
+            processActionWithIdentifier(identifier, withUserInfo: userInfo)
+        }
+    }
+    //响应远程通知
+    override func handleActionWithIdentifier(identifier: String?, forRemoteNotification remoteNotification: [NSObject : AnyObject]) {
+        processActionWithIdentifier(identifier, withUserInfo: remoteNotification)
+    }
+    //自定义userInfo
+    func processActionWithIdentifier(identifier:String?,withUserInfo userInfo:[NSObject:AnyObject]){
+        if identifier! == "firstButtonAction" {
+            let userInfo:[NSObject:AnyObject] = [
+                "catergory":"fistpage",
+                "timer":10,
+                "message":"轻松一下",
+                "title":"王子音乐"
+            ]
+            
+            WKInterfaceController.openParentApplication(userInfo, reply: nil)
+        }
     }
 
 }

@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		45613DE31B00A4D700796654 /* WKInformController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45613DE21B00A4D700796654 /* WKInformController.swift */; };
+		45A40CFC1B00F426003E2FD8 /* WKNotificationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45A40CFB1B00F426003E2FD8 /* WKNotificationController.swift */; };
 		45E1F6DD1AF1CD310034EB13 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45E1F6DC1AF1CD310034EB13 /* AppDelegate.swift */; };
 		45E1F6E01AF1CD320034EB13 /* DBFMwatch.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 45E1F6DE1AF1CD320034EB13 /* DBFMwatch.xcdatamodeld */; };
 		45E1F6E21AF1CD320034EB13 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45E1F6E11AF1CD320034EB13 /* ViewController.swift */; };
@@ -15,7 +17,6 @@
 		45E1F6EA1AF1CD320034EB13 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 45E1F6E81AF1CD320034EB13 /* LaunchScreen.xib */; };
 		45E1F6F61AF1CD320034EB13 /* DBFMwatchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45E1F6F51AF1CD320034EB13 /* DBFMwatchTests.swift */; };
 		45E1F7091AF1CD470034EB13 /* InterfaceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45E1F7081AF1CD470034EB13 /* InterfaceController.swift */; };
-		45E1F70B1AF1CD470034EB13 /* NotificationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45E1F70A1AF1CD470034EB13 /* NotificationController.swift */; };
 		45E1F70D1AF1CD470034EB13 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 45E1F70C1AF1CD470034EB13 /* Images.xcassets */; };
 		45E1F7111AF1CD470034EB13 /* DBFMwatch WatchKit App.app in Resources */ = {isa = PBXBuildFile; fileRef = 45E1F7101AF1CD470034EB13 /* DBFMwatch WatchKit App.app */; };
 		45E1F7191AF1CD470034EB13 /* Interface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 45E1F7171AF1CD470034EB13 /* Interface.storyboard */; };
@@ -70,6 +71,9 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		45613DE21B00A4D700796654 /* WKInformController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WKInformController.swift; sourceTree = "<group>"; };
+		4572CDF31B01A23F008BD230 /* TimerNotificationPayload.apns */ = {isa = PBXFileReference; lastKnownFileType = text; path = TimerNotificationPayload.apns; sourceTree = "<group>"; };
+		45A40CFB1B00F426003E2FD8 /* WKNotificationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WKNotificationController.swift; sourceTree = "<group>"; };
 		45E1F6D71AF1CD310034EB13 /* DBFMwatch.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DBFMwatch.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		45E1F6DB1AF1CD310034EB13 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		45E1F6DC1AF1CD310034EB13 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -85,7 +89,6 @@
 		45E1F7061AF1CD470034EB13 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		45E1F7071AF1CD470034EB13 /* PushNotificationPayload.apns */ = {isa = PBXFileReference; lastKnownFileType = text; path = PushNotificationPayload.apns; sourceTree = "<group>"; };
 		45E1F7081AF1CD470034EB13 /* InterfaceController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InterfaceController.swift; sourceTree = "<group>"; };
-		45E1F70A1AF1CD470034EB13 /* NotificationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationController.swift; sourceTree = "<group>"; };
 		45E1F70C1AF1CD470034EB13 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		45E1F7101AF1CD470034EB13 /* DBFMwatch WatchKit App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "DBFMwatch WatchKit App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		45E1F7161AF1CD470034EB13 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -193,7 +196,6 @@
 				45E1F7261AF1CF390034EB13 /* Alamofire.swift */,
 				45E1F7271AF1CF390034EB13 /* SwiftyJSON.swift */,
 				45E1F7081AF1CD470034EB13 /* InterfaceController.swift */,
-				45E1F70A1AF1CD470034EB13 /* NotificationController.swift */,
 				45E1F70C1AF1CD470034EB13 /* Images.xcassets */,
 				45E1F7051AF1CD470034EB13 /* Supporting Files */,
 				45E1F72A1AF1D6F90034EB13 /* HttpController.swift */,
@@ -202,6 +204,8 @@
 				45E1F7321AF20C7A0034EB13 /* WKChannelRow.swift */,
 				45E1F7341AF2169B0034EB13 /* WKSongRow.swift */,
 				45E1F7361AF2184A0034EB13 /* WKSongController.swift */,
+				45613DE21B00A4D700796654 /* WKInformController.swift */,
+				45A40CFB1B00F426003E2FD8 /* WKNotificationController.swift */,
 			);
 			path = "DBFMwatch WatchKit Extension";
 			sourceTree = "<group>";
@@ -211,6 +215,7 @@
 			children = (
 				45E1F7061AF1CD470034EB13 /* Info.plist */,
 				45E1F7071AF1CD470034EB13 /* PushNotificationPayload.apns */,
+				4572CDF31B01A23F008BD230 /* TimerNotificationPayload.apns */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -417,7 +422,8 @@
 				45E1F72B1AF1D6F90034EB13 /* HttpController.swift in Sources */,
 				45E1F7311AF20C240034EB13 /* WKChannelController.swift in Sources */,
 				45E1F7371AF2184A0034EB13 /* WKSongController.swift in Sources */,
-				45E1F70B1AF1CD470034EB13 /* NotificationController.swift in Sources */,
+				45A40CFC1B00F426003E2FD8 /* WKNotificationController.swift in Sources */,
+				45613DE31B00A4D700796654 /* WKInformController.swift in Sources */,
 				45E1F72D1AF1DA0E0034EB13 /* LZData.swift in Sources */,
 				45E1F7091AF1CD470034EB13 /* InterfaceController.swift in Sources */,
 				45E1F7291AF1CF390034EB13 /* SwiftyJSON.swift in Sources */,

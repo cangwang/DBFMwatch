@@ -19,6 +19,35 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Override point for customization after application launch.
         return true
     }
+    
+    //发送到watchkit
+    func application(application: UIApplication, handleWatchKitExtensionRequest userInfo: [NSObject : AnyObject]?, reply: (([NSObject : AnyObject]!) -> Void)!) {
+        let user = userInfo as! [String :AnyObject]
+        let category = user["category"] as! String
+
+        if category == "fistpage" {
+            let application = UIApplication.sharedApplication()
+            let message = user["message"] as! String
+            let title = user["title"] as! String
+            let timer = user["time"] as! Int
+            let fireDate = NSDate(timeIntervalSinceNow: NSTimeInterval(timer))
+            let notification = UILocalNotification()
+            notification.fireDate = fireDate
+            notification.alertTitle = title
+            notification.category = category
+            notification.userInfo = userInfo
+            
+            notification.hasAction = true
+            application.scheduleLocalNotification(notification)
+            
+            if (reply != nil) {
+                reply(nil)
+            }
+            
+        }
+        
+    }
+    
 
     func applicationWillResignActive(application: UIApplication) {
         // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.

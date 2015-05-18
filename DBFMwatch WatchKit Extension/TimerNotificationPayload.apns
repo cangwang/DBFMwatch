@@ -4,16 +4,15 @@
             "body": "轻松一下!",
             "title": "王子音乐"
         },
-        "category": "firstpage"
+        "category": "secondpage"
     },
     
     "WatchKit Simulator Actions": [
-        {
-            "title": "进入王子音乐",
-            "color": ""
-            "identifier": "firstButtonAction"
-        }
-    ],
+                                   {
+                                   "title": "进入王子音乐",
+                                   "identifier": "firstButtonAction"
+                                   }
+                                   ],
     
     "customKey": "Use this file to define a testing payload for your notifications. The aps dictionary specifies the category, alert text and title. The WatchKit Simulator Actions array can provide info for one or more action buttons in addition to the standard Dismiss button. Any other top level keys are custom payload. If you have multiple such JSON files in your project, you'll be able to select them when choosing to debug the notification interface of your Watch App."
 }

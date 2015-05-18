@@ -77,7 +77,7 @@
       debugDocumentVersioning = "YES"
       allowLocationSimulation = "YES"
       launchAutomaticallySubstyle = "8"
-      notificationPayloadFile = "DBFMwatch WatchKit Extension/PushNotificationPayload.apns">
+      notificationPayloadFile = "DBFMwatch WatchKit Extension/TimerNotificationPayload.apns">
       <RemoteRunnable
          runnableDebuggingMode = "2"
          BundleIdentifier = "com.apple.springboard"
